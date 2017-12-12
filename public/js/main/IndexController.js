@@ -8,7 +8,18 @@ export default function IndexController(container) {
   this._toastsView = new ToastsView(this._container);
   this._lostConnectionToast = null;
   this._openSocket();
+  this._registerServiceWorker();
 }
+
+IndexController.prototype._registerServiceWorker = () => {
+  if (!navigator.serviceWorker) {
+    return;
+  }
+
+  navigator.serviceWorker.register('/sw.js').then(() => {
+    console.log('Registration worked!');
+  });
+};
 
 // open a connection to the server for live updates
 IndexController.prototype._openSocket = function() {
