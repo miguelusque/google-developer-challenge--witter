@@ -16,9 +16,9 @@ IndexController.prototype._registerServiceWorker = () => {
     return;
   }
 
-  navigator.serviceWorker.register('/sw.js').then(() => {
-    console.log('Registration worked!');
-  });
+  navigator.serviceWorker.register('/sw.js')
+    .then(() => { console.log('Registration worked!'); })
+    .catch(() => { console.log('Registration failed!'); });
 };
 
 // open a connection to the server for live updates
