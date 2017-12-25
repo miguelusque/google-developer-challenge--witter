@@ -1,7 +1,9 @@
 self.addEventListener('fetch', (event) => {
-  if(event.request.url.endsWith('.jpg')) {
-    event.respondWith(
-      fetch('/imgs/dr-evil.gif')
-    );
-  }
+  event.respondWith(
+    fetch(event.request)
+      .then((response) => (response.status === 404
+        ? fetch('/imgs/dr-evil.gif')
+        : response))
+      .catch(()=> (new Response("Uh oh, that totally failed!")))
+  );
 });
