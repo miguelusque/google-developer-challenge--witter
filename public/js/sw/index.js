@@ -17,10 +17,8 @@ self.addEventListener('install', function(event) {
 
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    fetch(event.request)
-      .then((response) => (response.status === 404
-        ? fetch('/imgs/dr-evil.gif')
-        : response))
-      .catch(()=> (new Response("Uh oh, that totally failed!")))
-  );
+    caches.match(event.request).then((response) => (
+      response ? response : fetch(event.request)
+    )
+  ));
 });
