@@ -21,9 +21,12 @@ self.addEventListener('install', function(event) {
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => (
-      cacheNames.filter((cacheName) => (cacheName.startsWith('wittr-') &&
-        cacheName !== staticCacheName))
-    ))
+      Promise.all(
+        cacheNames.filter((cacheName) => (cacheName.startsWith('wittr-') &&
+          cacheName !== staticCacheName))
+          .map((cacheName) => (caches.delete(cacheName)))
+      ))
+    )
   );
 });
 
